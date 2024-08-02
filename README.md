@@ -85,58 +85,99 @@ By following the above steps, you can create a virtual environment on the same m
 
 A database on the existing Koha ILMS MySql/MariaDB will be created to record the Library Visitor details like time of Check-in/Out, Which staff performed the task, etc.
 
-1. Create the database “libraryvisitor” with the following commands
+1. Create the database “libraryvisitor” with the following commands:
 
-root@ubuntu-4gb-hel1-1:~# mysql -uroot -p
+```
+mysql -uroot -p
+```
 
-MariaDB [(none)]> create database libraryvisitor;
+MariaDB [(none)]> 
 
-MariaDB [(none)]> quit;
+```
+create database libraryvisitor;
+```
+
+MariaDB [(none)]>
+
+```
+quit;
+```
 
 2. Restore the database (schema.sql)given inside the folder visitorinout  
 
-root@ubuntu-4gb-hel1-1:~# mysql -uroot -p libraryvisitor < /opt/visitorinout/schema.sql 
+```
+mysql -uroot -p libraryvisitor < /opt/visitorinout/schema.sql
+``` 
 
 3. Creating a Koha_library database Read-Only user to read the borrowers and book issue records from your Koha ILMS with the following commands:
 
 -- Log in to the MariaDB server as the root user
-mysql -u root -p
--- Create a read-only user
-CREATE USER 'koha_readonly'@'localhost' IDENTIFIED BY 'readonly_password';
 
--- Grant SELECT privileges to the read-only user on the koha_library database
+```
+mysql -u root -p
+```
+-- Create a read-only user
+
+```
+CREATE USER 'koha_readonly'@'localhost' IDENTIFIED BY 'readonly_password';
+```
+
+-- Grant SELECT privileges to the read-only user on the koha_library database:
+
+```
 GRANT SELECT ON koha_library.* TO 'koha_readonly'@'localhost';
+```
 
 -- Grant all privileges on the libraryvisitor database to the koha_readonly user:
 
+```
 GRANT ALL PRIVILEGES ON libraryvisitor.* TO 'koha_readonly'@'localhost';
+```
 
--- Apply the changes
+-- Apply the changes:
+
+```
 FLUSH PRIVILEGES;
+```
 
 4. To generate sql report through Koha ILMS grant permission is needed on both the databases
 
+```
 mysql -u root -p
+```
 
+```
 GRANT SELECT ON libraryvisitor.visitorsdetail TO 'koha_library'@'localhost';
+```
+```
 SHOW GRANTS FOR 'koha_library'@'localhost';
+```
+```
 FLUSH PRIVILEGES;
+```
+```
 quit;
+```
 
-C. Configuration of VirtualHost and Apache
+*C. Configuration of VirtualHost and Apache*
 
 
 1. Configure the visitorinout on apache server (You may configure alongside Koha or other applications already running). Enable mod_wsgi: Apache uses modules to extend its functionality. One such module is mod_wsgi, which allows Apache to serve Python web applications. You'll need to enable mod_wsgi if it's not already enabled and install it if not available:
 
+```
 sudo apt-get install libapache2-mod-wsgi-py3
-
+```
+```
 sudo a2enmod wsgi
+```
 
 2. Create a new Apache virtual host configuration file for your Python application (visitorinout). This file will specify how Apache should handle requests to your application. For example, create a file named “libraryvisitor.conf” in Apache's sites-available directory with following command:
 
+```
 sudo nano /etc/apache2/sites-available/visitorinout.conf
+```
 
-
+```
 <VirtualHost *:8085>
     ServerName localhost
 
@@ -170,27 +211,32 @@ sudo nano /etc/apache2/sites-available/visitorinout.conf
         Require all granted
     </Directory>
 </VirtualHost>
-
+```
 
 Replace yourdomain.com with your actual domain name or server IP address. Adjust /path/to/your/virtualenv and /path/to/your/project with the appropriate paths to your Python virtual environment and project directory (as you have created in previous steps and shown above).
 
 3. Enable the Virtual Host and Port
 
 
-    a. To Enable the virtual host you created and change the ports if changed above run the following command:
+--To Enable the virtual host you created and change the ports if changed above run the following command:
 
+```
 sudo a2ensite visitorinout.conf
+```
 
-b. Add new port as you have added in the above virtualhost file and save it.
+--Add new port as you have added in the above virtualhost file and save it.
 
+```
 sudo nano /etc/apache2/ports.conf
-
+```
 
 After making any configuration changes, restart Apache to apply the changes with following command:
 
+```
 sudo systemctl restart apache2
+```
 
-D. Creation of Staff credentials to access visitorinout (Library Visitor) and Reports
+*D. Creation of Staff credentials to access visitorinout (Library Visitor) and Reports*
 
 1. It is a similar method as credentials is created through Patron module of Koha ILMS to access staff interface. You may create a user in the Koha as usual and give him/her minimul permission like to only access catalogue as shown in the below screenshot. However, all persons having any type of staff permission can access the Library Visitor (visitorinout)
 
