@@ -332,5 +332,13 @@ quit;
 
 
 
+## Third-Party Libraries
+
+This project uses the following third-party libraries:
+
+- **Bootstrap**: A popular front-end framework. License information can be found in the `licenses/bootstrap-license.txt` file.
+- **jQuery**: A fast, small, and feature-rich JavaScript library. License information can be found in the `licenses/jquery-license.txt` file.
+
+The license files are included in the `licenses` directory of this project.
 
 
