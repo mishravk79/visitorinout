@@ -1,5 +1,5 @@
 
-**Vsitorinout Manual**
+**Visitorinout Manual**
 
 **Requirment:**
 
@@ -7,10 +7,9 @@ Vsitorinout is developed using Python language and tested with Koha ILMS Version
 
 **Installation Steps:**
 
-A. Download and Installation of Necessary packages
+*A. Download and Installation of Necessary packages*
 
 On the server Koha should be running or you may install on testing machine for testing of visitorinout before implementing it on Production server. The software/Libraries required to install visitorinout is listed in requirement.txt file which will be installed together with a single command.
-
 
 1. Download the visitorinout from GitHub repository which is available at : https://github.com/mishravk79 and extract the file in a folder name “visitorinout”. Install python on Ubuntu if it is not installed on your machine with the following command:
    
@@ -43,16 +42,26 @@ cd /opt/visitorinout/
 sudo apt install python3-venv
 '''
 6. Create the Virtual Environment: Use the “python3 -m venv” command to create a new virtual environment. You can specify the name of the directory where you want to create the virtual environment. Conventionally, it's named env: 
+
+'''
 python3 -m venv env
+'''
+
 This command will create a new directory named “env” in your current directory (/opt/visitorinout/env), which will contain the virtual environment.
 
-8. Activate the Virtual Environment: Once the virtual environment is created, you need to activate it. Activating the virtual environment ensures that any Python commands you run will use the Python interpreter and packages installed within the virtual environment: 
+7. Activate the Virtual Environment: Once the virtual environment is created, you need to activate it. Activating the virtual environment ensures that any Python commands you run will use the Python interpreter and packages installed within the virtual environment:
+
+'''   
 source env/bin/activate
+'''
+
 After activation, you should see (env) in your terminal prompt, indicating that the virtual environment is active. “(env) root@koha-OptiPlex-9010:/opt/visitorinout#”
 
-9. Install Dependencies with the virtual environment activated, you can now install your project dependencies using pip. Typically, you would have a requirements.txt file containing a list of dependencies. You can install them using following command:
+8. Install Dependencies with the virtual environment activated, you can now install your project dependencies using pip. Typically, you would have a requirements.txt file containing a list of dependencies. You can install them using following command:
 
+'''
 pip install -r requirements.txt
+'''
 
 OR if you are facing any issue then you may open the requirements.txt file and install packages listed their one by one as:
 
@@ -60,13 +69,19 @@ pip install packagename (example: pip install flask)
 
 Check all the packages listed in requirments.txt is installed with following command
 
+'''
 pip list
+'''
 
-9. Deactivate the Virtual Environment: Once you're done working on your project, you can deactivate the virtual environment with the command: 
+8. Deactivate the Virtual Environment: Once you're done working on your project, you can deactivate the virtual environment with the command:
+
+'''
 deactivate
+'''
+
 By following the above steps, you can create a virtual environment on the same machine where Apache/Koha is installed. This virtual environment will isolate your project's dependencies from other Python projects and system-wide installations, ensuring that your project runs smoothly alongside Koha ILMS.
 
-B. Creation of database and other related configurations
+*B. Creation of database and other related configurations*
 
 A database on the existing Koha ILMS MySql/MariaDB will be created to record the Library Visitor details like time of Check-in/Out, Which staff performed the task, etc.
 
