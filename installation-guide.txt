@@ -1,0 +1,210 @@
+Installation Steps
+
+Transfer the libraryvisitor folder and files to /opt/
+
+root@ubuntu-4gb-hel1-1:~# cp -r /home/libraryvisitor/ /opt/
+
+Create the database libraryvisitor
+
+root@ubuntu-4gb-hel1-1:~# mysql -uroot -p
+
+MariaDB [(none)]> create database libraryvisitor;
+
+MariaDB [(none)]> quit;
+
+
+Restore the database (schema.sql)given inside the folder libraryvisitor  
+
+root@ubuntu-4gb-hel1-1:~# mysql -uroot -p libraryvisitor < /opt/libraryvisitor/schema.sql 
+
+Create Virtual Environment
+
+Creating a virtual environment on the same machine where Apache is installed is straightforward. Here's how you can create a virtual environment:
+
+    Install Python3-pip: Execute the following command to Install the python3-pip if it is not installed on your Server.
+
+apt install python3-pip
+
+
+Navigate to Your Project Directory: First, navigate to the directory where you want to create the virtual environment. This should be the directory where your Python project files are located. (example: /opt/datavisuopenalex), to reach your project directory execute the following command:
+
+root@koha-OptiPlex-9010:/home/koha# cd /opt/libraryvisitor/
+
+Install “virtualenv” (if not already installed): If “virtualenv” is not already installed on your system, you can install it using pip, Python's package manager:
+
+sudo apt install python3-venv
+
+
+    Create the Virtual Environment: Use the “python3 -m venv” command to create a new virtual environment. You can specify the name of the directory where you want to create the virtual environment. Conventionally, it's named env:
+
+python3 -m venv env
+
+This command will create a new directory named “env” in your current directory (/opt/datavisuopenalex/env), which will contain the virtual environment. 6. Activate the Virtual Environment: Once the virtual environment is created, you need to activate it. Activating the virtual environment ensures that any Python commands you run will use the Python interpreter and packages installed within the virtual environment:
+
+source env/bin/activate
+
+run the file requirments.txt from /opt/libraryvisitor/requirments.txt it will install all the packages/libraries. You may install one by one with command after reviwing the requirments.txt file like : pip install blinker
+
+(env) root@ubuntu-4gb-hel1-1:/opt/libraryvisitor# pip install -r /opt/libraryvisitor/requirements.txt
+
+Check all the packages listed in requirments.txt is installed with following command
+
+pip list
+
+
+    Deactivate the Virtual Environment: Once you're done working on your project, you can deactivate the virtual environment with the command:
+
+deactivate
+
+Configure the Dashboard on apache server (You may configure alongside Koha or other applications already running)
+
+    Enable mod_wsgi: Apache uses modules to extend its functionality. One such module is mod_wsgi, which allows Apache to serve Python web applications. You'll need to enable mod_wsgi if it's not already enabled and install it if not available:
+
+sudo apt-get install libapache2-mod-wsgi-py3
+
+sudo a2enmod wsgi
+
+
+
+    Configure a New Virtual Host: Create a new Apache virtual host configuration file for your Python application. This file will specify how Apache should handle requests to your application. For example, create a file named “dashboard.conf” in Apache's sites-available directory:
+
+sudo nano /etc/apache2/sites-available/libraryvisitor.conf
+
+<VirtualHost *:8085>
+    ServerName localhost
+
+    # WSGI daemon process configuration
+    WSGIDaemonProcess libraryvisitor_python_apps \
+        python-home=/opt/libraryvisitor/env \
+        python-path=/opt/libraryvisitor
+
+    # WSGI process group for the daemon process
+    WSGIProcessGroup libraryvisitor_python_apps
+
+    # WSGI script alias for the Flask application
+    WSGIScriptAlias / /opt/libraryvisitor/app.wsgi
+
+    # Directory configuration for the WSGI script
+    <Directory /opt/libraryvisitor>
+        <Files app.wsgi>
+            Require all granted
+        </Files>
+    </Directory>
+
+    # Directory configuration for the templates
+    Alias /templates /opt/libraryvisitor/templates
+    <Directory /opt/libraryvisitor/templates>
+        Require all granted
+    </Directory>
+
+    # Directory configuration for static files (if any)
+    Alias /static /opt/libraryvisitor/static
+    <Directory /opt/libraryvisitor/static>
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+
+       
+    
+    Replace yourdomain.com with your actual domain name or server IP address. Adjust /path/to/your/virtualenv and /path/to/your/project with the appropriate paths to your Python virtual environment and project directory (as you have created in previous steps and shown above).
+
+    Enable the Virtual Host: Enable the virtual host you created and change the ports if changed above:
+
+sudo a2ensite libraryvisitor.conf
+
+Add new port as you have added in the above virtualhost file and save it.
+
+sudo nano /etc/apache2/ports.conf
+
+
+    Restart Apache: After making any configuration changes, restart Apache to apply the changes:
+
+sudo systemctl restart apache2
+
+
+
+
+
+
+NOTE
+
+To know apache problem command
+
+sudo apachectl configtest
+
+
+Check apache error
+
+sudo tail -f /var/log/apache2/error.log
+
+To create index of columns in libraryvisitor for fast searching if any NULL value is left
+
+Access your MySQL/MariaDB database by typing the following command and entering your password when prompted:
+
+mysql -u your_username -p
+
+Switch to your database:
+
+USE libraryvisitor;
+
+Create the indexes by running the following SQL commands:
+
+CREATE INDEX idx_checkout_time_null ON visitorsdetail(checkout_time);
+
+
+
+EXIT;
+
+
+Creating a Read-Only User
+
+To create a read-only user for the koha_library database, you can use the following SQL commands:
+
+
+
+-- Log in to the MariaDB server as the root user
+mysql -u root -p
+
+-- Create a read-only user
+CREATE USER 'koha_readonly'@'localhost' IDENTIFIED BY 'readonly_password';
+
+-- Grant SELECT privileges to the read-only user on the koha_library database
+GRANT SELECT ON koha_library.* TO 'koha_readonly'@'localhost';
+
+-- Grant all privileges on the libraryvisitor database to the koha_readonly user:
+
+GRANT ALL PRIVILEGES ON libraryvisitor.* TO 'koha_readonly'@'localhost';
+
+
+-- Apply the changes
+FLUSH PRIVILEGES;
+
+To generate sql report grant permission is needed on both the databases
+
+mysql -u root -p
+
+
+GRANT SELECT ON libraryvisitor.visitorsdetail TO 'koha_library'@'localhost';
+
+
+SHOW GRANTS FOR 'koha_library'@'localhost';
+FLUSH PRIVILEGES;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
