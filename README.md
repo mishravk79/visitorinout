@@ -13,55 +13,55 @@ On the server Koha should be running or you may install on testing machine for t
 
 1. Download the visitorinout from GitHub repository which is available at : https://github.com/mishravk79 and extract the file in a folder name “visitorinout”. Install python on Ubuntu if it is not installed on your machine with the following command:
    
-'''
+```
 apt install python3
-'''
+```
 
 2. Transfer your “visitorinout” folder/files to “opt” folder of Ubuntu with the following command:
 
-'''
+```
 cp -r /home/koha/visitorinout /opt
-'''
+```
 
 3. Create Virtual Environment
 Creating a virtual environment on the same machine where Apache is installed is straightforward, it helps in runnin the application smoothly. It can be created with below command. Execute the following command to Install the python3-pip if it is not installed on your Server.
 
-'''
+```
 apt install python3-pip
-'''
+```
 
 4. Navigate to the directory where you want to create the virtual environment. This should be the directory where your visitorinout project files are located. (example: /opt/visitorinout), to reach your project directory execute the following command:
 
-'''
+```
 cd /opt/visitorinout/
-'''
+```
 
 5. Install “virtualenv” (if not already installed): If “virtualenv” is not already installed on your system, you can install it using pip, Python's package manager:
 
-'''
+```
 sudo apt install python3-venv
-'''
+```
 6. Create the Virtual Environment: Use the “python3 -m venv” command to create a new virtual environment. You can specify the name of the directory where you want to create the virtual environment. Conventionally, it's named env: 
 
-'''
+```
 python3 -m venv env
-'''
+```
 
 This command will create a new directory named “env” in your current directory (/opt/visitorinout/env), which will contain the virtual environment.
 
 7. Activate the Virtual Environment: Once the virtual environment is created, you need to activate it. Activating the virtual environment ensures that any Python commands you run will use the Python interpreter and packages installed within the virtual environment:
 
-'''   
+``` 
 source env/bin/activate
-'''
+```
 
 After activation, you should see (env) in your terminal prompt, indicating that the virtual environment is active. “(env) root@koha-OptiPlex-9010:/opt/visitorinout#”
 
 8. Install Dependencies with the virtual environment activated, you can now install your project dependencies using pip. Typically, you would have a requirements.txt file containing a list of dependencies. You can install them using following command:
 
-'''
+```
 pip install -r requirements.txt
-'''
+```
 
 OR if you are facing any issue then you may open the requirements.txt file and install packages listed their one by one as:
 
@@ -69,15 +69,15 @@ pip install packagename (example: pip install flask)
 
 Check all the packages listed in requirments.txt is installed with following command
 
-'''
+```
 pip list
-'''
+```
 
 8. Deactivate the Virtual Environment: Once you're done working on your project, you can deactivate the virtual environment with the command:
 
-'''
+```
 deactivate
-'''
+```
 
 By following the above steps, you can create a virtual environment on the same machine where Apache/Koha is installed. This virtual environment will isolate your project's dependencies from other Python projects and system-wide installations, ensuring that your project runs smoothly alongside Koha ILMS.
 
