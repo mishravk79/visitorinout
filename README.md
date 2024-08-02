@@ -238,13 +238,16 @@ sudo systemctl restart apache2
 
 *D. Creation of Staff credentials to access visitorinout (Library Visitor) and Reports*
 
-1. It is a similar method as credentials is created through Patron module of Koha ILMS to access staff interface. You may create a user in the Koha as usual and give him/her minimul permission like to only access catalogue as shown in the below screenshot. However, all persons having any type of staff permission can access the Library Visitor (visitorinout)
+1. It is a similar method as credentials is created through Patron module of Koha ILMS to access staff interface. You may create a user in the Koha as usual and give him/her minimul permission like to only access catalogue as shown in the below screenshot. However, all persons having any type of staff permission can access the Library Visitor (visitorinout), but through report it will be tracked who checked in/out patrons.
+
+Figure 1: Setting minimum staff permission to access Visitorinout
+
+![](https://github.com/mishravk79/datavisuopenalex/blob/main/static/staffpermision.png)
 
 
+2. All the reports related to Library Visitor can be created like other reports designed to generate Koha reports/statistics. Some of the reports format according to above configurations are given below:
 
-2. All the reports related to Library Visitor can me created like other reports designed to generate Koha reports/statistics. Some of the reports format according to above configurations are given below:
-
-a. Details of all visitors in between two date range and Staff who Checked-in/out
+*a. Details of all visitors in between two date range and Staff who Checked-in/out*
 
 SELECT v.checkin_time 'Checked-in Time', v.checkout_time 'Checked-out Time', CONCAT(b.firstname, ' ', b.surname) 'Name', b.email 'Email', b.cardnumber 'ID Number', b.phone 'Contact Number', b.sex 'Male/Female', v.staff_checkin 'Staff Checked-in', v.staff_checkout 'Staff Checked-out'
 FROM libraryvisitor.visitorsdetail v
@@ -252,7 +255,7 @@ JOIN koha_library.borrowers b ON v.borrowernumber = b.borrowernumber
 WHERE DATE(v.checkin_time) BETWEEN <<Date Between (dd/mm/yyyy)|date>> AND <<and (dd/mm/yyyy)|date>> -- Replace with your desired date range
 ORDER BY v.checkin_time
 
-b. Monthly Statistics of Visitors 	
+*b. Monthly Statistics of Visitors* 	
 
 SELECT DATE_FORMAT(v.checkin_time, '%m-%Y') AS 'Month and Year', COUNT(*) AS 'Total Visitors'
 FROM libraryvisitor.visitorsdetail v
@@ -260,7 +263,7 @@ WHERE DATE(v.checkin_time) BETWEEN <<Start Date (dd/mm/yyyy)|date>> AND <<End Da
 GROUP BY DATE_FORMAT(v.checkin_time, '%m-%Y')
 ORDER BY DATE_FORMAT(v.checkin_time, '%Y-%m')
 
-c. Total Number of visitor per day in between two date range 
+*c. Total Number of visitor per day in between two date range* 
 
 SELECT DATE(v.checkin_time) AS 'Date of Visit', COUNT(*) AS 'Total Visitor'
 FROM libraryvisitor.visitorsdetail v
@@ -269,7 +272,7 @@ GROUP BY DATE(v.checkin_time)
 ORDER BY DATE(v.checkin_time)
 
 
-d. Details of all visitors who have not yet checked out from Library
+*d. Details of all visitors who have not yet checked out from Library*
 
 SELECT v.checkin_time AS 'Checked-in Time', v.checkout_time AS 'Checked-out Time', CONCAT(b.firstname, ' ', b.surname) AS 'Name',
     b.email AS 'Email', b.cardnumber AS 'ID Number', b.phone AS 'Contact Number', b.sex AS 'Male/Female'
@@ -282,38 +285,49 @@ ORDER BY v.checkin_time
 
 Figure 1: Sample reports prepared with Report Group (Visitor Report)
 
+![](https://github.com/mishravk79/datavisuopenalex/blob/main/static/samplereport.png)
 
 
 Figure 2: Sample Bar Chart created from the daily visitor statistics in Koha ILMS
 
+![](https://github.com/mishravk79/datavisuopenalex/blob/main/static/chart.png)
 
 
-
-IMPORTANT NOTES
+**IMPORTANT NOTES**
 
 - To know apache problem run the following command:
 
+```
 sudo apachectl configtest
-
+```
 
 - Check apache error
 
+```
 sudo tail -f /var/log/apache2/error.log
+```
 
 - Create index of columns in libraryvisitor database table visitorsdetail for fast searching if any NULL value is left. It will help in fast processing of member check-out and fetch of book issued records if activated. Access your MySQL/MariaDB database by typing the following command and entering your password when prompted:
 
+```
 mysql -u your_username -p
+```
 
 Switch to your database:
 
+```
 USE libraryvisitor;
+```
 
 Create the indexes by running the following SQL commands:
 
+```
 CREATE INDEX idx_checkout_time_null ON visitorsdetail(checkout_time);
+```
 
+```
 quit;
-
+```
 
 
 
