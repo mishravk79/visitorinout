@@ -310,7 +310,7 @@ sudo tail -f /var/log/apache2/error.log
 • Create index of columns in libraryvisitor database table visitorsdetail for fast searching if any NULL value is left. It will help in fast processing of member check-out and fetch of book issued records if activated. Access your MySQL/MariaDB database by typing the following command and entering your password when prompted: 
 
 ```
-mysql -u your_username -p
+mysql -uroot -p
 ```
 Switch to your database:
 
