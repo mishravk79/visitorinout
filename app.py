@@ -1,3 +1,8 @@
+# Copyright (c) 2024 Vinod Kumar Mishra
+# This file is part of Visitorinout.
+# Visitorinout is released under the MIT License.
+# See the License file for more details.
+
 from flask import Flask, request, render_template, redirect, url_for, session, flash
 import bcrypt
 from db import get_db, close_db, get_koha_db
