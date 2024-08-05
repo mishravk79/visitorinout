@@ -29,26 +29,26 @@ apt install python3-pip
 cd /opt/visitorinout/
 ```
 
-    5. Install “virtualenv” (if not already installed): If “virtualenv” is not already installed on your system, you can install it using pip, Python's package manager: 
+5. Install “virtualenv” (if not already installed): If “virtualenv” is not already installed on your system, you can install it using pip, Python's package manager: 
 
 ```
 sudo apt install python3-venv
 ```
-    6. Create the Virtual Environment: Use the “python3 -m venv” command to create a new virtual environment. You can specify the name of the directory where you want to create the virtual environment. Conventionally, it's named env: 
+6. Create the Virtual Environment: Use the “python3 -m venv” command to create a new virtual environment. You can specify the name of the directory where you want to create the virtual environment. Conventionally, it's named env: 
 
 ```
 python3 -m venv env
 ```
 This command will create a new directory named “env” in your current directory (/opt/visitorinout/env), which will contain the virtual environment.
 
-    7. Activate the Virtual Environment: Once the virtual environment is created, you need to activate it. Activating the virtual environment ensures that any Python commands you run will use the Python interpreter and packages installed within the virtual environment: 
+7. Activate the Virtual Environment: Once the virtual environment is created, you need to activate it. Activating the virtual environment ensures that any Python commands you run will use the Python interpreter and packages installed within the virtual environment: 
 
 ```
 source env/bin/activate
 ```
 After activation, you should see (env) in your terminal prompt, indicating that the virtual environment is active. “(env) root@koha-OptiPlex-9010:/opt/visitorinout#”
 
-    8. Install Dependencies with the virtual environment activated, you can now install your project dependencies using pip. Typically, you would have a requirements.txt file containing a list of dependencies. You can install them using following command: 
+8. Install Dependencies with the virtual environment activated, you can now install your project dependencies using pip. Typically, you would have a requirements.txt file containing a list of dependencies. You can install them using following command: 
 
 ```    
 pip install -r requirements.txt
@@ -62,7 +62,7 @@ Check all the packages listed in requirments.txt is installed with following com
 pip list
 ```
 
-    9. Deactivate the Virtual Environment: Once you're done working on your project, you can deactivate the virtual environment with the command:
+9. Deactivate the Virtual Environment: Once you're done working on your project, you can deactivate the virtual environment with the command:
 
 ```
 deactivate
@@ -73,7 +73,7 @@ By following the above steps, you can create a virtual environment on the same m
 
 A database on the existing Koha ILMS MySql/MariaDB will be created to record the Library Visitor details like time of Check-in/Out, Which staff performed the task, etc.
 
-    1. Create the database “libraryvisitor” with the following commands: 
+1. Create the database “libraryvisitor” with the following commands: 
 
 ```
 mysql -uroot -p
@@ -89,12 +89,12 @@ MariaDB [(none)]>
 ```
 quit;
 ```
-    2. Restore the database (schema.sql)given inside the folder visitorinout
+2. Restore the database (schema.sql)given inside the folder visitorinout
 
 ```
 mysql -uroot -p libraryvisitor < /opt/visitorinout/schema.sql
 ```
-    3. Create a Koha_library database Read-Only user to read the borrowers and book issue records from your Koha ILMS with strong password as per your wish and the following commands:
+3. Create a Koha_library database Read-Only user to read the borrowers and book issue records from your Koha ILMS with strong password as per your wish and the following commands:
     
 -- Log in to the MariaDB server as the root user
 
@@ -121,7 +121,7 @@ GRANT ALL PRIVILEGES ON libraryvisitor.* TO 'koha_readonly'@'localhost';
 ```
 FLUSH PRIVILEGES;
 ```
-    4. The above credentials need to be setup in db.py file as shown in the picture below but do not use the same credentials in production server, to set the above credential run the following command and edit the file with any editor like nano.
+4. The above credentials need to be setup in db.py file as shown in the picture below but do not use the same credentials in production server, to set the above credential run the following command and edit the file with any editor like nano.
 
 ```
 nano /opt/visitorinout/db.py
@@ -129,7 +129,7 @@ nano /opt/visitorinout/db.py
 Figure 1: Setting credentials in db.py file
 ![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure1.jpg)
 
-    5. To generate sql report through Koha ILMS grant permission is needed on both the databases 
+5. To generate sql report through Koha ILMS grant permission is needed on both the databases 
 
 ```
 mysql -u root -p
@@ -148,7 +148,7 @@ quit;
 ```
 *C. Configuration of VirtualHost and Apache*
 
-    1. Configure the visitorinout on apache server (You may configure alongside Koha or other applications already running). Enable mod_wsgi: Apache uses modules to extend its functionality. One such module is mod_wsgi, which allows Apache to serve Python web applications. You'll need to enable mod_wsgi if it's not already enabled and install it if not available: 
+1. Configure the visitorinout on apache server (You may configure alongside Koha or other applications already running). Enable mod_wsgi: Apache uses modules to extend its functionality. One such module is mod_wsgi, which allows Apache to serve Python web applications. You'll need to enable mod_wsgi if it's not already enabled and install it if not available: 
 
 ```
 sudo apt-get install libapache2-mod-wsgi-py3
@@ -156,7 +156,7 @@ sudo apt-get install libapache2-mod-wsgi-py3
 ```
 sudo a2enmod wsgi
 ```
-    2. Create a new Apache virtual host configuration file for your Python application (visitorinout). This file will specify how Apache should handle requests to your application. For example, create a file named “libraryvisitor.conf” in Apache's sites-available directory with following command:
+2. Create a new Apache virtual host configuration file for your Python application (visitorinout). This file will specify how Apache should handle requests to your application. For example, create a file named “libraryvisitor.conf” in Apache's sites-available directory with following command:
 
 ```
 sudo nano /etc/apache2/sites-available/visitorinout.conf
@@ -199,7 +199,7 @@ sudo nano /etc/apache2/sites-available/visitorinout.conf
 
 Replace yourdomain.com with your actual domain name or server IP address. Adjust /path/to/your/virtualenv and /path/to/your/project with the appropriate paths to your Python virtual environment and project directory (as you have created in previous steps and shown above).
 
-    3. Enable the Virtual Host and Port 
+3. Enable the Virtual Host and Port 
     
 --To Enable the virtual host you created and change the ports if changed above run the following command:
 
@@ -220,12 +220,12 @@ Now you can open the Visitorinout with url http://yourip:8085/login (Your IP and
 
 *D. Creation of Staff credentials to access visitorinout (Library Visitor) and Reports*
 
-    1. It is a similar method as credentials is created through Patron module of Koha ILMS to access staff interface. You may create a user in the Koha as usual and give him/her minimul permission like to only access catalogue as shown in the below screenshot. However, all persons having any type of staff permission can access the Library Visitor (visitorinout), but through report it will be tracked who checked in/out patrons.
+1. It is a similar method as credentials is created through Patron module of Koha ILMS to access staff interface. You may create a user in the Koha as usual and give him/her minimul permission like to only access catalogue as shown in the below screenshot. However, all persons having any type of staff permission can access the Library Visitor (visitorinout), but through report it will be tracked who checked in/out patrons.
     
 Figure 2: Setting minimum staff permission to access Visitorinout
 ![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure2.jpg)
 
-    2. All the reports related to Library Visitor can be created like other reports designed to generate Koha reports/statistics. Some of the reports format according to above configurations are given below: 
+2. All the reports related to Library Visitor can be created like other reports designed to generate Koha reports/statistics. Some of the reports format according to above configurations are given below: 
     
 a. Details of all visitors in between two date range and Staff who Checked-in/out
 
@@ -263,19 +263,19 @@ Figure 4: Sample Bar Chart created from the daily visitor statistics in Koha ILM
 
 The visitorinout have common features like any other In/Out management system apart from that at the time of Check-out it display the list of book/s issued to the member so that the staff at exit gate can verify the books taken by him/her without any additional printing of Check-out slip.
 
-    1. Staff Login to the portal is very simple and anyone having any type of staff permission in Koha ILMS can loged into the system and perform the Visitor In/Out task. The User ID of the Staff responsible to execute the check in/out task will be saved in the libraryvisitor database which can be tracked with reports.
+1. Staff Login to the portal is very simple and anyone having any type of staff permission in Koha ILMS can loged into the system and perform the Visitor In/Out task. The User ID of the Staff responsible to execute the check in/out task will be saved in the libraryvisitor database which can be tracked with reports.
     
 Figure 5: Staff Login
 ![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure5.jpg)
 
 
-    2. You may “Enable Issued Book Data” fetching while member is checking-out from the exit gate to ensure proper transaction of books. If it is not applicable to your library you may Untick the option “Enable Issued Book Data” to show only meber detail checking-out from the library.
+2. You may “Enable Issued Book Data” fetching while member is checking-out from the exit gate to ensure proper transaction of books. If it is not applicable to your library you may Untick the option “Enable Issued Book Data” to show only meber detail checking-out from the library.
 
 
 Figure 6: The list of checked out books issued to member to be verified by staff at exit.
 ![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure6.jpg)
 
-    3. Customization of Various nomenclature seen in the above screenshot like Library Name, Other headings, fonts, etc is possible by editing the concern files like css, html, etc. with the help of editor.
+3. Customization of Various nomenclature seen in the above screenshot like Library Name, Other headings, fonts, etc is possible by editing the concern files like css, html, etc. with the help of editor.
 
 *Libraryvisitor Database Schema*
 
