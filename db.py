@@ -11,8 +11,8 @@ def get_db():
         g.db = mysql.connector.connect(
             host='localhost',
             database='libraryvisitor',            # Your new database for visitors
-            user='libraryvisitor_user',           # Replace with your MariaDB username
-            password='secure_password'            # Replace with your MariaDB password
+            user='koha_readonly',           # Replace with your MariaDB username
+            password='readonly_password'            # Replace with your MariaDB password
         )
     return g.db
 
@@ -21,8 +21,8 @@ def get_koha_db():
         g.koha_db = mysql.connector.connect(
             host='localhost',
             database='koha_library',              # Your Koha database
-            user='libraryvisitor_user',           # Replace with your MariaDB username
-            password='secure_password'            # Replace with your MariaDB password
+            user='koha_readonly',           # Replace with your MariaDB username
+            password='readonly_password'            # Replace with your MariaDB password
         )
     return g.koha_db
 
