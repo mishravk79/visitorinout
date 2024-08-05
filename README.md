@@ -341,4 +341,8 @@ This project uses the following third-party libraries:
 
 The license files are included in the `licenses` directory of this project.
 
+## License
+
+This project is licensed under the MIT License - see the (LICENSE) file for details.
+
 
