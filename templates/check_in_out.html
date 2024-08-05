@@ -1,3 +1,7 @@
+<!-- Copyright (c) 2024 Vinod Kumar Mishra-->
+<!-- This file is part of Visitorinout.-->
+<!-- Visitorinout is released under the MIT License.-->
+<!-- See the License file for more details.-->
 <!-- templates/check_in_out.html -->
 
 {% extends 'base.html' %}
@@ -5,79 +9,86 @@
 {% block content %}
 
 <div class="overlay"></div>
-    <!-- Move logout button outside the content container for fixed positioning -->
-    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
 
-    <div class="check-in-out-container mt-5">
-        <div class="current-date-time" id="currentDateTime"></div>
+<!-- Move username and logout button outside the content container for fixed positioning -->
+<div class="user-info">
+    {% if session['username'] %}
+        <span>{{ session['username'] }}</span> 
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    {% endif %}
+</div>
 
-        <div class="card check-in-out-form">
-            <div class="card-body">
-                <h2>Welcome to Central Library</h2>
-                <h3>Visitor's Check-in/Check-out</h3>
+<div class="check-in-out-container mt-5">
+    <div class="current-date-time" id="currentDateTime"></div>
 
-                 <form method="post">
-                    <div class="form-group">
-                        <label for="card_number">Enter Member Card Number (Barcode):</label>
-                        <input type="text" class="form-control" id="card_number" name="card_number" required autofocus>
-                    </div>
+    <div class="card check-in-out-form">
+        <div class="card-body">
+            <h2>Welcome to Central Library</h2>
+            <h3>Visitor's Check-in/Check-out</h3>
 
-                    <!-- Toggle switch for enabling/disabling book data fetching -->
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="fetch_books" name="fetch_books" {% if fetch_books %} checked {% endif %}>
-                        <label class="form-check-label" for="fetch_books">Enable Issued Book Data Fetching</label>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-check-in-out">Check-in/Check-out</button>
-                </form>
-
-                {% if visitor_name %}
-                    <div class="mt-3 visitor-info">
-                        <p>Visitor Name: {{ visitor_name }}</p>
-                        {% if visitor_image %}
-                            <div class="visitor-image-container">
-                                <img src="data:image/{{ visitor_image_format }};base64,{{ visitor_image }}" alt="Visitor Image" class="img-thumbnail">
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endif %}
-
-                {% if error %}
-                    <div class="alert alert-danger mt-3">{{ error }}</div>
-                {% endif %}
-                
-                <!-- Flash messages Thank you and Welcome -->
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <div class="flash-message flash-message-info">
-                {% for message in messages %}
-                <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-
-                <div class="mt-4">
-                    <table class="table table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Patrons Checked-in Today</th>
-                                <th scope="col">Patrons Checked-out Today</th>
-                                <th scope="col">Patrons Currently Available</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">{{ total_check_in }}</td>
-                                <td class="text-center">{{ total_check_out }}</td>
-                                <td class="text-center">{{ total_available }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <form method="post">
+                <div class="form-group">
+                    <label for="card_number">Enter Member Card Number (Barcode):</label>
+                    <input type="text" class="form-control" id="card_number" name="card_number" required autofocus>
                 </div>
 
-                {% if books_issued %}
-                    <h5 class="mt-4">Books Issued/Renewed Today</h5>
+                <!-- Toggle switch for enabling/disabling book data fetching -->
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="fetch_books" name="fetch_books" {% if fetch_books %} checked {% endif %}>
+                    <label class="form-check-label" for="fetch_books">Enable Issued Book Data</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-check-in-out">Check-in/Check-out</button>
+            </form>
+
+            {% if visitor_name %}
+                <div class="mt-3 visitor-info">
+                    <p>Visitor Name: {{ visitor_name }}</p>
+                    {% if visitor_image %}
+                        <div class="visitor-image-container">
+                            <img src="data:image/{{ visitor_image_format }};base64,{{ visitor_image }}" alt="Visitor Image" class="img-thumbnail">
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="alert alert-danger mt-3">{{ error }}</div>
+            {% endif %}
+
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <div>
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="mt-4">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Patrons Checked-in Today</th>
+                            <th scope="col">Patrons Checked-out Today</th>
+                            <th scope="col">Patrons Currently Available</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">{{ total_check_in }}</td>
+                            <td class="text-center">{{ total_check_out }}</td>
+                            <td class="text-center">{{ total_available }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- This section display book/s issued to the patrons right side of card when they checked out-->
+            {% if books_issued %}
+                <div class="books-issued-container">
+                    <h5>Books Issued/Renewed Today</h5>
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                             <tr>
@@ -94,24 +105,31 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
+
         </div>
     </div>
+</div>
 
-    <script>
-        function updateDateTime() {
-            var now = new Date();
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            var dateTimeString = now.toLocaleDateString('en-US', options);
-            document.getElementById('currentDateTime').textContent = dateTimeString;
-        }
+<!-- Footer Section -->
+<div class="footer">
+    <p>Powered by <a href="https://github.com/mishravk79" target="_blank">Visitorinout</a></p>
+</div>
 
-        // Update the time every second
-        setInterval(updateDateTime, 1000);
+<script>
+    function updateDateTime() {
+        var now = new Date();
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        var dateTimeString = now.toLocaleDateString('en-US', options);
+        document.getElementById('currentDateTime').textContent = dateTimeString;
+    }
 
-        // Initialize date and time
-        updateDateTime();
-    </script>
+    // Update the time every second
+    setInterval(updateDateTime, 1000);
+
+    // Initialize date and time
+    updateDateTime();
+</script>
 
 {% endblock %}

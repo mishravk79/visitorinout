@@ -1,3 +1,7 @@
+/* Copyright (c) 2024 Vinod Kumar Mishra */
+/* This file is part of Visitorinout.*/
+/* Visitorinout is released under the MIT License.*/
+/* See the License file for more details.*/
 /* Shared styles */
 body {
     font-family: 'Arial', sans-serif;
@@ -36,27 +40,28 @@ body {
     color: white;
 }
 
-.logout-btn {
-    position: fixed; /* Fixed positioning to ensure it's always at the top-right */
+/* Position the username and logout button */
+.user-info {
+    position: fixed;
     top: 10px;
     right: 10px;
-    color: white;
-    font-size: 16px; /* Adjust font size for visibility */
-    z-index: 1000; /* Ensure it's above other content */
-    padding: 10px 20px;
-    background: #f0ad4e; /* Button color */
-    border: none;
+    background-color: rgba(255, 255, 255, 0.8); /* Optional background for better readability */
+    padding: 5px;
     border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.user-info span {
+    margin-right: 10px;
+}
+
+.logout-btn {
+    color: #dc3545; /* Bootstrap's danger color for logout */
+    text-decoration: none;
+    font-weight: bold;
+}
 .logout-btn:hover {
-    background: #ec971f; /* Hover color */
+    text-decoration: underline;
 }
 
 /* Styling for form elements */
@@ -156,6 +161,7 @@ td, th {
     position: relative; /* Ensure positioning context for absolute children */
     margin: auto; /* Center horizontally */
     margin-top: 20px; 
+    max-height: 80%;
     
 }
 
@@ -179,11 +185,6 @@ td, th {
     font-size: 15px;
 }
 
-flashes {
-    color: red;
-    font-weight: bold;
-}
-
 .visitor-image-container {
     width: 115px;
     height: 115px;
@@ -192,8 +193,9 @@ flashes {
     /*top: 43%;  Center vertically within the card */
     right: 10px; /* Adjust as needed */
     transform: translateY(-155%); /* Center vertically */
-    background-color: white; /* Background color for empty state */
+    background-color: transparent; /* Background color for empty state */
     border-radius: 5px;
+    border: none; /* Remove any border */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -231,13 +233,19 @@ h5.mt-4 {
 }
 
 /* Base style for Welcome/Thank you flash messages */
-.flash-message-info {
+
+.flash {
     font-size: 14px;
-    color: pink;
     opacity: 0;
     animation: bounceIn 1.5s forwards;
     text-align: center;
     font-style: italic; 
+    color: #ffc0cb; /* or any color you prefer for success messages */
+    border-radius: 20px;
+    margin-bottom: 10px;
+    background-color: black; /* light green background */
+    border: 1px solid yellow; /* green border */
+    /*padding: 10px; to widen the text background color effect */
 }
 
 /* Bounce In Animation */
@@ -258,6 +266,50 @@ h5.mt-4 {
         transform: scale(1);
     }
 }
+
+/* Specific styles for books issued container out side main card */
+.books-issued-container {
+    width: 28%; /* Adjust width as needed */
+    max-height: 85%; /* Ensure it doesn't exceed viewport height> */
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    position: fixed; /* Absolute positioning for default horizontal alignment */
+    right: 10px; /* Adjust spacing from the right side */
+    top: 85px; /* Adjust spacing from the top */
+    z-index: 1000; /* Ensure it appears above other content */
+    
+}
+
+/* Add this footer to your style.css file */
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: transparent; /* Transparent background */
+    padding: 10px;
+    display: flex; /* Use Flexbox for horizontal layout */
+    gap: 20px; /* Space between items */
+    font-size: 14px;
+    color: #333;
+}
+
+.footer p {
+    margin: 0; /* Remove default margin */
+}
+
+.footer a {
+    color: yellow; /* Link color */
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
 
 /* Responsive styles */
 @media (max-width: 767px) {
@@ -288,6 +340,15 @@ h5.mt-4 {
         width: 100px;
         height: 100px;
     }
+
+    .books-issued-container {
+        width: 100%; /* Full width on mobile */
+        position: relative; /* Stack below the card */
+        right: auto; /* Remove right alignment on mobile */
+        top: auto; /* Remove top alignment on mobile */
+        margin-top: 20px; /* Space above the books-issued-container */
+    }
+    
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -314,7 +375,17 @@ h5.mt-4 {
     }
 
     .visitor-image-container {
-        width: 115px;
-        height: 115px;
+        width: 100px;
+        height: 100px;
     }
+
+    .books-issued-container {
+        width: 40%; /* Adjust width for medium screens */
+        right: 20px; /* Adjust spacing from the right */
+        top: 100px; /* Adjust spacing from the top */
+    }
+
 }
+
+
+
