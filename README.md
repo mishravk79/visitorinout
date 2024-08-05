@@ -287,14 +287,20 @@ Figure 7:  Libraryvisitor database table structure/schema
 
 **IMPORTANT NOTES**
 
-    • Do not use the above User ID and Paaswords in your production server and set your own strong credentials.
-    • The Above process assumes your Koha database name is “Koha_library” and if there is any changes of database name you need to make modifications in /opt/visitorinout/app.py and /opt/visitorinout/db.py file with appropriate editor like nano.
-    • If you are attempting to upgrade Koha and there is any changes in borrowers table (borrowernumber) system may hardly allow neither it will allow you to delete the Koha database as the borrowers table is linked with libraryvisitor database. In this case you may take backup of libraryvisitor database and delete it, after upgradation of Koha or other works you may restore the libraryvisitor database as it is.
-    • To know apache problem run the following command: 
+• Do not use the above User ID and Paaswords in your production server and set your own strong credentials.
+
+• The Above process assumes your Koha database name is “Koha_library” and if there is any changes of database name you need to make modifications in /opt/visitorinout/app.py and /opt/visitorinout/db.py file with appropriate editor like nano.
+
+• If you are attempting to upgrade Koha and there is any changes in borrowers table (borrowernumber) system may hardly allow neither it will allow you to delete the Koha database as the borrowers table is linked with libraryvisitor database. In this case you may take backup of libraryvisitor database and delete it, after upgradation of Koha or other works you may restore the libraryvisitor database as it is.
+
+• To know apache problem run the following command: 
+
 ```
 sudo apachectl configtest
+
 ```
-    • Check apache error with the following command:
+• Check apache error with the following command:
+
 ```
 sudo tail -f /var/log/apache2/error.log
 ```
@@ -319,8 +325,9 @@ quit;
 *Third-Party Libraries*
 
 This project uses the following third-party libraries:
-    • Bootstrap: A popular front-end framework. License information can be found in the licenses/bootstrap-license.txt file. 
-    • jQuery: A fast, small, and feature-rich JavaScript library. License information can be found in the licenses/jquery-license.txt file. 
+
+• Bootstrap: A popular front-end framework. License information can be found in the licenses/bootstrap-license.txt file. 
+• jQuery: A fast, small, and feature-rich JavaScript library. License information can be found in the licenses/jquery-license.txt file. 
 The license files are included in the licenses directory of this project.
 
 ## License
