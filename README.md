@@ -14,16 +14,16 @@ On the server Koha should be running or you may install on testing machine for t
 ```
 apt install python3
 ```
-    2. Transfer your “visitorinout” folder/files to “opt” folder of Ubuntu with the following command: 
+2. Transfer your “visitorinout” folder/files to “opt” folder of Ubuntu with the following command: 
 ```    
 cp -r /home/koha/visitorinout /opt
 ```
-    3. Create Virtual Environment Creating a virtual environment on the same machine where Apache is installed is straightforward, it helps in runnin the application smoothly. It can be created with below command. Execute the following command to Install the python3-pip if it is not installed on your Server.
+3. Create Virtual Environment Creating a virtual environment on the same machine where Apache is installed is straightforward, it helps in runnin the application smoothly. It can be created with below command. Execute the following command to Install the python3-pip if it is not installed on your Server.
 
 ```
 apt install python3-pip
 ```
-    4. Navigate to the directory where you want to create the virtual environment. This should be the directory where your visitorinout project files are located. (example: /opt/visitorinout), to reach your project directory execute the following command: 
+4. Navigate to the directory where you want to create the virtual environment. This should be the directory where your visitorinout project files are located. (example: /opt/visitorinout), to reach your project directory execute the following command: 
 
 ```
 cd /opt/visitorinout/
