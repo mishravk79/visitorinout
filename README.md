@@ -127,7 +127,7 @@ FLUSH PRIVILEGES;
 ```
 nano /opt/visitorinout/db.py
 ```
-Figure 1: Stting credentials in db.py file
+Figure 1: Setting credentials in db.py file
 ![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure1.jpg)
 
     5. To generate sql report through Koha ILMS grant permission is needed on both the databases 
@@ -224,6 +224,7 @@ Now you can open the Visitorinout with url http://yourip:8085/login (Your IP and
     1. It is a similar method as credentials is created through Patron module of Koha ILMS to access staff interface. You may create a user in the Koha as usual and give him/her minimul permission like to only access catalogue as shown in the below screenshot. However, all persons having any type of staff permission can access the Library Visitor (visitorinout), but through report it will be tracked who checked in/out patrons.
     
 Figure 2: Setting minimum staff permission to access Visitorinout
+![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure2.jpg)
 
     2. All the reports related to Library Visitor can be created like other reports designed to generate Koha reports/statistics. Some of the reports format according to above configurations are given below: 
     
@@ -252,9 +253,11 @@ SELECT v.checkin_time AS 'Checked-in Time', v.checkout_time AS 'Checked-out Time
 ```
 
 Figure 3: Sample reports prepared with Report Group (Visitor Report)
+![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure3.jpg)
 
 
 Figure 4: Sample Bar Chart created from the daily visitor statistics in Koha ILMS
+![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure4.jpg)
 
 
 **Handling of Visitorinout and other Options**
@@ -264,12 +267,14 @@ The visitorinout have common features like any other In/Out management system ap
     1. Staff Login to the portal is very simple and anyone having any type of staff permission in Koha ILMS can loged into the system and perform the Visitor In/Out task. The User ID of the Staff responsible to execute the check in/out task will be saved in the libraryvisitor database which can be tracked with reports.
     
 Figure 5: Staff Login
+![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure5.jpg)
 
 
     2. You may “Enable Issued Book Data” fetching while member is checking-out from the exit gate to ensure proper transaction of books. If it is not applicable to your library you may Untick the option “Enable Issued Book Data” to show only meber detail checking-out from the library.
 
 
-Figure 6: The list of checked out books issued to member to be verified by staff at exit. 
+Figure 6: The list of checked out books issued to member to be verified by staff at exit.
+![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure6.jpg)
 
     3. Customization of Various nomenclature seen in the above screenshot like Library Name, Other headings, fonts, etc is possible by editing the concern files like css, html, etc. with the help of editor.
 
@@ -278,6 +283,7 @@ Figure 6: The list of checked out books issued to member to be verified by staff
 Only 1 table (visitorsdetail) is created under the libraryvisitor database with Six columns and their headings as shown in the below schreenshot. These columns heading may be used for generating various reports and other data analysis. The borrowernumber is linked with Koha database table brrowers.borrowernumber.
 
 Figure 7:  Libraryvisitor database table structure/schema
+![](https://github.com/mishravk79/visitorinout/blob/main/static/images/figure7.jpg)
 
 
 **IMPORTANT NOTES**
