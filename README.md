@@ -127,6 +127,7 @@ FLUSH PRIVILEGES;
 ```
 nano /opt/visitorinout/db.py
 ```
+Figure 1: Stting credentials in db.py file
 
     5. To generate sql report through Koha ILMS grant permission is needed on both the databases 
 
