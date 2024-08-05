@@ -9,7 +9,8 @@ Installation Steps:
 
 On the server Koha should be running or you may install on testing machine for testing of visitorinout before implementing it on Production server. The software/Libraries required to install visitorinout is listed in requirement.txt file which will be installed together with a single command.
     
-    1. Download the visitorinout from GitHub repository which is available at : https://github.com/mishravk79 and extract the file in a folder name “visitorinout”. Install python on Ubuntu if it is not installed on your machine with the following command:
+1. Download the visitorinout from GitHub repository which is available at : https://github.com/mishravk79 and extract the file in a folder name “visitorinout”. Install python on Ubuntu if it is not installed on your machine with the following command:
+   
 ```
 apt install python3
 ```
