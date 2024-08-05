@@ -11,6 +11,7 @@ On the server Koha should be running or you may install on testing machine for t
     
     1. Download the visitorinout from GitHub repository which is available at : https://github.com/mishravk79 and extract the file in a folder name “visitorinout”. Install python on Ubuntu if it is not installed on your machine with the following command: 
     
+    
 ```
 apt install python3
 ```
