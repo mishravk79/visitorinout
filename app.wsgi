@@ -1,3 +1,8 @@
+# Copyright (c) 2024 Vinod Kumar Mishra
+# This file is part of Visitorinout.
+# Visitorinout is released under the MIT License.
+# See the License file for more details.
+
 #!/usr/bin/python3.10
 import sys
 import logging
