@@ -121,6 +121,9 @@ GRANT ALL PRIVILEGES ON libraryvisitor.* TO 'koha_readonly'@'localhost';
 ```
 FLUSH PRIVILEGES;
 ```
+```
+quit;
+```
 4. The above credentials need to be setup in db.py file as shown in the picture below but do not use the same credentials in production server, to set the above credential run the following command and edit the file with any editor like nano.
 
 ```
