@@ -7,7 +7,7 @@
 import sys
 import logging
 logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0, "/opt/visitor")
+sys.path.insert(0, "/opt/visitorinout")
 
 from app import app as application
 application.secret_key = 'your_secret_key'
