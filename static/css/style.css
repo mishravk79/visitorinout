@@ -310,6 +310,9 @@ h5.mt-4 {
     text-decoration: underline; /* Underline on hover */
 }
 
+.footer-link {
+    font-size: 0.8em; /* Adjust the size as needed */
+}
 
 /* Responsive styles */
 @media (max-width: 767px) {
