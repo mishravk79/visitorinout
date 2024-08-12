@@ -11,10 +11,15 @@ VisitorInOut is an open-source software solution designed for efficient visitor 
 *Key Features:*
 
 •	Real-Time Check-In/Check-Out Tracking: Accurately logs the entry and exit times of library visitors.
+
 •	Automated Book Issue List: At checkout, it displays a list of books issued to the member, potentially eliminating the need for physical issue slips at the exit gate.
+
 •	Seamless Integration with Koha ILMS: Utilizes Koha's existing reporting and staff permission features, making it easy for libraries already using Koha to adopt.
+
 •	Flexible Entry Methods: Supports both barcode scanning and manual entry of member IDs, with potential for future integration of biometrics and RFID technology.
+
 •	Versatile Application: Suitable not only for libraries but also for managing visitor records and student entry/exit timings in larger campuses with minor code modifications.
+
 •	Compatibility: Can be integrated with other ILMS systems such as SOUL, Libsys, and VTLS through their proprietary solutions.
 
 *Requirment:*
