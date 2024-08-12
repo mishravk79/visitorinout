@@ -2,7 +2,8 @@
 
 *Requirment:*
 
-VsitorInOut is developed using Python language and tested with Koha ILMS Version 23.11 and Ubuntu 22.04, but it may work on another older versions too. This is basically developed to record the usage statistics of library patrons for taking various managerial decisions related to Libraries. visitorinout can be used as gate register to capture the IN/OUT management of people visiting the campuses or hostels entry/exit, etc.
+VsitorInOut is developed using Python language and tested with Koha ILMS Version 23.11 and Ubuntu 22.04, but it may work on another older versions too. This is basically developed to record the usage statistics of library patrons for taking various managerial decisions related to Libraries. visitorinout can be used as gate register to capture the IN/OUT management of people visiting the campuses or hostels entry/exit, etc. The demonstration video available at https://youtu.be/9Acw9igx9vs .
+
 Installation Steps:
 
 *A. Download and Installation of Necessary packages*
