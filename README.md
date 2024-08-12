@@ -1,5 +1,22 @@
 **VisitorInOut Manual**
 
+*Release Information:*
+
+In honor of the 132nd birth anniversary of Padma Shri Dr. S.R. Ranganathan, the first version of VisitorInOut is launched as open-source software under the MIT license. The first version is now available on GitHub at https://github.com/mishravk79/visitorinout , and it is named **v1.24.08 (Dr. Ranganathan Release)** in tribute to his contributions to library science. The demonstration Video is available at https://youtu.be/9Acw9igx9vs .
+
+*Overview:*
+
+VisitorInOut is an open-source software solution designed for efficient visitor management. Developed using Python, HTML, and CSS, it is currently integrated with the Koha Integrated Library Management System (ILMS). This software is designed to record the date and time visitors enter and exit the library.
+
+*Key Features:*
+
+•	Real-Time Check-In/Check-Out Tracking: Accurately logs the entry and exit times of library visitors.
+•	Automated Book Issue List: At checkout, it displays a list of books issued to the member, potentially eliminating the need for physical issue slips at the exit gate.
+•	Seamless Integration with Koha ILMS: Utilizes Koha's existing reporting and staff permission features, making it easy for libraries already using Koha to adopt.
+•	Flexible Entry Methods: Supports both barcode scanning and manual entry of member IDs, with potential for future integration of biometrics and RFID technology.
+•	Versatile Application: Suitable not only for libraries but also for managing visitor records and student entry/exit timings in larger campuses with minor code modifications.
+•	Compatibility: Can be integrated with other ILMS systems such as SOUL, Libsys, and VTLS through their proprietary solutions.
+
 *Requirment:*
 
 VsitorInOut is developed using Python language and tested with Koha ILMS Version 23.11 and Ubuntu 22.04, but it may work on another older versions too. This is basically developed to record the usage statistics of library patrons for taking various managerial decisions related to Libraries. visitorinout can be used as gate register to capture the IN/OUT management of people visiting the campuses or hostels entry/exit, etc. The demonstration video available at https://youtu.be/9Acw9igx9vs .
