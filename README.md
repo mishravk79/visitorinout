@@ -268,7 +268,11 @@ SELECT DATE_FORMAT(v.checkin_time, '%m-%Y') AS 'Month and Year', COUNT(*) AS 'To
 c. Total Number of visitor per day in between two date range
 
 ```
-SELECT DATE(v.checkin_time) AS 'Date of Visit', COUNT(*) AS 'Total Visitor' FROM libraryvisitor.visitorsdetail v WHERE DATE(v.checkin_time) BETWEEN <<Start Date (dd/mm/yyyy)|date>> AND <<End Date (dd/mm/yyyy)|date>> -- Replace with your desired date range GROUP BY DATE(v.checkin_time) ORDER BY DATE(v.checkin_time)
+SELECT DATE(v.checkin_time) AS 'Date of Visit', COUNT(*) AS 'Total Visitor'
+FROM libraryvisitor.visitorsdetail v
+WHERE DATE(v.checkin_time) BETWEEN <<Start Date (dd/mm/yyyy)|date>> AND <<End Date (dd/mm/yyyy)|date>> -- Replace with your desired date range
+GROUP BY DATE(v.checkin_time)
+ORDER BY DATE(v.checkin_time)
 ```
 
 d. Details of all visitors who have not yet checked out from Library
