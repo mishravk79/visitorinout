@@ -1,7 +1,7 @@
 Visitor In/Out Reports: These reports are designed to work with a Koha database named koha_library. If your database name differs, please replace koha_library with your actual database name in each SQL query.
 
 
-**1. Details of all visitors in between two date range**
+1. Details of all visitors in between two date range
 
 SELECT v.checkin_time 'Checked-in Time', v.checkout_time 'Checked-out Time', CONCAT(b.firstname, ' ', b.surname) 'Name', b.email 'Email', b.cardnumber 'ID Number', b.phone 'Contact Number', b.sex 'Male/Female', v.staff_checkin 'Staff Checked-in', v.staff_checkout 'Staff Checked-out'
 FROM libraryvisitor.visitorsdetail v
