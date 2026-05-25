@@ -7,7 +7,6 @@ from flask import Flask, request, render_template, redirect, url_for, session, f
 import bcrypt
 from db import get_db, close_db, get_koha_db
 import base64
-import imghdr
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
@@ -19,6 +18,26 @@ def teardown_db(exception):
 def verify_password(stored_password, input_password):
     input_password_bytes = input_password.encode('utf-8')
     return bcrypt.checkpw(input_password_bytes, stored_password.encode('utf-8'))
+
+
+def detect_image_format(image_data):
+    if not image_data:
+        return None
+    image_data = bytes(image_data)
+    if image_data.startswith(b'\xff\xd8\xff'):
+        return 'jpeg'
+    if image_data.startswith(b'\x89PNG\r\n\x1a\n'):
+        return 'png'
+    if image_data[:6] in (b'GIF87a', b'GIF89a'):
+        return 'gif'
+    if image_data.startswith(b'BM'):
+        return 'bmp'
+    if image_data.startswith((b'MM\x00*', b'II*\x00')):
+        return 'tiff'
+    if len(image_data) >= 12 and image_data[:4] == b'RIFF' and image_data[8:12] == b'WEBP':
+        return 'webp'
+    return None
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -71,7 +90,7 @@ def check_in_out():
             image_record = cursor.fetchone()
             if image_record and image_record['imagefile']:
                 visitor_image = base64.b64encode(image_record['imagefile']).decode('utf-8')
-                visitor_image_format = imghdr.what(None, h=image_record['imagefile'])
+                visitor_image_format = detect_image_format(image_record['imagefile'])
 
             # Check if the visitor is currently checked in
             cursor.execute('SELECT * FROM visitorsdetail WHERE borrowernumber = %s AND checkout_time IS NULL', (member['borrowernumber'],))
